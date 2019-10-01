@@ -1,0 +1,124 @@
+﻿slides 1-9
+1959 Hubel & Wiesel
+Electrical signal from brain + stimulus => Response in cat experience
+
+slides 1-10
+1963 Larry Roberts - Block world
+Original picture , Differentiated picture , Feature points selected
+
+slides 1-11
+1966.7.7 Seymour Papert - The Summer Vision Project(MIT Project)
+
+slides 1-12
+1970s David Marr - Vision
+
+Input Image - Primal Sketch - 2 1/2 D Sketch - 3 D Model Representation
+
+slides 1-14
+1979 Brooks & Binford - Generalized Cylinder
+1973 Fischler and Elschlager - Pictorial Structure
+
+slides 1-15
+1987 David Lowe
+
+대담한 시도 였지만 장난감 수준의 예시에 머물렀다.
+
+slides 1-16
+1997 Shi & Malik - Normalized Cut
+
+slides 1-17
+2001 Viola & Jones - Face Detection
+cpu 성능이 매우 낮음에도 불구하고 실시간 얼굴 인식으 카메라에 적용
+
+slides 1-18
+1999 David Lowe - "SIFT" & Object Recognition
+ 다른 각도의 표지판 인식, 물체 인식 작업
+
+slides 1-19
+2006 Lazebnik,Schmid & Ponce - Spatial Pyramid Matching
+
+slides 1-20
+2005 Dalal & Triggs - Histogram of Gradients(HoG)
+2009 Felzenswalb, McAllester, Ramanan - Deformable Part Model
+
+slides 1-21
+가장 영향력있는 벤치 마크 데이터 세트 : PASCAL Visual Object Challenge(20 object categories)
+Everingham et al. 2006-2012
+
+카테고리당 1만개
+
+slides 1-22
+IMAGENET - 22K categories and 14M images
+
+slides 1-23
+1000 obeject classes, 1,431,167 images
+output top 5 labels => sucess
+
+2012 ~ Neural Network form is winning
+
+slides 1-33
+
+Neural Network is began from 1998 LeCun et al.
+
+1998 LeCun CNN 		10^6 of transistors, 10^7 of pixels used in traing in NIST
+2012 Krizhevsky et al.	10^9 of transistors, GPU, 10^14 of pixels used in training in IMAGENET
+
+CPU(number of transistors), GPU, BigData Collect, 
+
+slides 1-37
+2007 Fei-Fei, lyer, Koch, Perona, JoV
+사진에 대한 설명을 하는 Vision tec
+
+slides 1-40
+emeritus 명예직의(보통 대학 교수에 대해 씀)
+
+requisite 1. 필요한 2. 필수품, 필요 조건
+
+Reference slides 1-47,8
+• Hubel, David H., and Torsten N. Wiesel. "Receptive fields, binocular interaction and functional
+architecture in the cat's visual cortex." The Journal of physiology 160.1 (1962): 106. [PDF]
+• Roberts, Lawrence Gilman. "Machine Perception of Three-dimensional Solids." Diss. Massachusetts
+Institute of Technology, 1963. [PDF]
+• Marr, David. "Vision.” The MIT Press, 1982. [PDF]
+• Brooks, Rodney A., and Creiner, Russell and Binford, Thomas O. "The ACRONYM model-based vision
+system. " In Proceedings of the 6th International Joint Conference on Artificial Intelligence (1979):
+105-113. [PDF]
+• Fischler, Martin A., and Robert A. Elschlager. "The representation and matching of pictorial structures."
+IEEE Transactions on Computers 22.1 (1973): 67-92. [PDF]
+• Lowe, David G., "Three-dimensional object recognition from single two-dimensional images," Artificial
+Intelligence, 31, 3 (1987), pp. 355-395. [PDF]
+• Shi, Jianbo, and Jitendra Malik. "Normalized cuts and image segmentation." Pattern Analysis and
+Machine Intelligence, IEEE Transactions on 22.8 (2000): 888-905. [PDF]
+• Viola, Paul, and Michael Jones. "Rapid object detection using a boosted cascade of simple features."
+Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer
+Society Conference on. Vol. 1. IEEE, 2001. [PDF]
+• Lowe, David G. "Distinctive image features from scale-invariant keypoints." International Journal of
+Computer Vision 60.2 (2004): 91-110. [PDF]
+• Lazebnik, Svetlana, Cordelia Schmid, and Jean Ponce. "Beyond bags of features: Spatial pyramid
+matching for recognizing natural scene categories." Computer Vision and Pattern Recognition, 2006
+IEEE Computer Society Conference on. Vol. 2. IEEE, 2006. [PDF]
+• Dalal, Navneet, and Bill Triggs. "Histograms of oriented gradients for human detection." Computer
+Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on. Vol. 1. IEEE,
+2005. [PDF]
+• Felzenszwalb, Pedro, David McAllester, and Deva Ramanan. "A discriminatively trained, multiscale,
+deformable part model." Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference
+on. IEEE, 2008 [PDF]
+• Everingham, Mark, et al. "The pascal visual object classes (VOC) challenge." International Journal of
+Computer Vision 88.2 (2010): 303-338. [PDF]
+• Deng, Jia, et al. "Imagenet: A large-scale hierarchical image database." Computer Vision and Pattern
+Recognition, 2009. CVPR 2009. IEEE Conference on. IEEE, 2009. [PDF]
+• Russakovsky, Olga, et al. "Imagenet Large Scale Visual Recognition Challenge." arXiv:1409.0575. [PDF]
+• Lin, Yuanqing, et al. "Large-scale image classification: fast feature extraction and SVM training."
+Computer Vision and Pattern Recognition (CVPR), 2011 IEEE Conference on. IEEE, 2011. [PDF]
+• Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. "Imagenet classification with deep convolutional
+neural networks." Advances in neural information processing systems. 2012. [PDF]
+• Szegedy, Christian, et al. "Going deeper with convolutions." arXiv preprint arXiv:1409.4842 (2014). [PDF]
+• Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for large-scale image
+recognition." arXiv preprint arXiv:1409.1556 (2014). [PDF]
+• He, Kaiming, et al. "Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition."
+arXiv preprint arXiv:1406.4729 (2014). [PDF]
+• LeCun, Yann, et al. "Gradient-based learning applied to document recognition." Proceedings of the
+IEEE 86.11 (1998): 2278-2324. [PDF]
+• Fei-Fei, Li, et al. "What do we perceive in a glance of a real-world scene?." Journal of vision 7.1 (2007):
+10. [PDF]
+

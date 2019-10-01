@@ -1,0 +1,230 @@
+﻿slides 3 - 6
+
+unravel (엉켜있던 것이) 느슨해지다, 풀리다. (이해하기 어려운 것을) 풀다
+
+hinge 경첩
+
+slides 3 - 12
+S = score
+
+slides 3 - 14
+Multiclass SVM loss
+ex 1)
+cat class
+cat 3.2 / car 5.1 / frog -1.7 => Losses : 2.9
+
+L_i = sum_(j != y_i) max(0, S_j - S_y_i + 1)
+L_cat = max (0, S_car - S_cat + 1) + max(0, S_frog - S_cat + 1)
+L_cat = max(0, 5.1 - 3.2 +1) + max (0, -1.7 -3.2 + 1) = max(0, 2.9) + max(0, -3.9)
+=2.9 + 0 = 2.9
+
+slides 3 - 15
+ex 2)
+car class
+cat 1.3 / car 4.9 / frog 2.0 => Losses : 0
+
+L_i = sum_(j != y_i) max(0, S_j - S_y_i + 1)
+L_car = max (0, S_cat - S_car + 1) + max(0, S_frog - S_car + 1)
+L_car = max(0, 1.3 - 4.9 +1) + max (0, 2.0 -4.9 + 1) = max(0, -2.6) + max(0, -1.9)
+=0 + 0 = 0
+
+slides 3 - 16
+ex 3)
+frog class
+cat 2.2 / car 2.5 / frog -3.1 => Losses : 12.9
+
+L_i = sum_(j != y_i) max(0, S_j - S_y_i + 1)
+L_frog = max (0, S_cat - S_frog + 1) + max(0, S_car - S_frog + 1)
+L_frog = max(0, 2.2 -(-3.1) +1) + max (0, 2.5 -(-3.1) + 1) = max(0, 6.3) + max(0, 6.6)
+= 6.3 + 6.6 = 12.9
+
+slides 3 - 17
+
+Loss over full dataset is average
+L = 1/N sum[from i=1 to N]L_i 
+
+L=(2.9+0+12.9) / 3 = 5.27 bad data set
+
+jiggle 빠르게 움직이다 , 흔들흔들하다
+
+slides 3 - 18
+Q1 : What happens to loss if car scores change a bit?
+상관 없음, loss는 변하지 않음 다만 다른 클래스 점수보다 높아야만 한다. 다른 클래스에 비해 올바른 라벨의 클래스가 상대적으로 점수가 낮은 경우에는 loss가 변화될 것이다.
+
+Q2 : What is the min/max possible loss?
+min : 0,  max: infinite (looking the hindge graph in SVM in slides 3-12)
+
+Q3 : At initialization W is small so all s ~ 0. What is the loss?
+Number of class - 1 => useful debugging strategy
+첫 시작시 위와 같은 값이 나오지 않는다면 코드를 다시 살펴봐야하는 전략을 짤 수 있다.
+
+Q4 : What if the sum was over all_classes?(including j=y_i)
+1이 증가한다. max(0, s_i - s_i +1) = max(0,1) = 1이 추가되므로
+
+Q5 : What if we used mean instead of sum?
+
+L_i = sum_(j != y_i) max(0, S_j - S_y_i + 1)
+answer : 바뀌지 않는다. 우리의 관심사는 True value of Loss
+
+Q6 : What if we used L_i = sum_(j != y_i) max{(0, S_j - S_y_i + 1)^2}
+다른 loss function을 가져다 준다. square hinge loss라는 또 다른 경험적 방법
+
+loss 는 얼마나 나쁜지를 알려주는 지표이다
+
+slides 3 - 24
+Multiclass SVM Loss:Example code
+
+def L_i_vectorized(x,y,W):
+	scores = W.dot(x)
+	margins = np.maximum(0, scores - scores[y] +1)
+	margins[y] =0 #j=y_i
+	loss_i = np.sum(margins)
+	return loss_i
+
+slides 3 - 25
+Suppose that we found a W such that L=0. Is this W unique?
+=> No. Another W like 2W is also has L=0
+
+slides 3 - 33
+
+L(W) = 1/N sum[from i=1 to N]L_i(f(x_i, W), y_i) + lambda * R(W)
+=Data Loss + Regularization 
+
+Data Loss : Model predictions should match training data
+Regularization : Model should be "simple", so it works on test data
+Occam's Razor : "Among competing hypothesis, the simplest is the best" 
+- William of Ockham, 1285 - 1347
+
+slides 3 - 34
+
+lambda : regularization strength(hyperparameter)
+
+L2 regularization R(W) = sum:k[sum:l[ (W_k,l)^2]]
+L1 regularization R(W) = sum:k[sum:l[ abs(W_k,l)]]
+Elastic net(L1+L2) R(W) = sum:k[sum:l[ beta*(W_k,l)^2 + abs(W_k,l)]]
+Max norm regularization (might see later)
+Dropout(will see later)
+Fancier : Batch Normalization, stochasitic depth
+
+L2 regularization check complexity of classifier
+전반적인 x 값을 퍼트리는 것으로써 강력한 툴이 될 수 있다.
+
+L1 regularization opposite interpretation with L2
+different notion of complexity, less complex
+
+
+slides 3 - 36
+
+if you are a Bayesian: L2 regularization also corresponds MAP inference using a Gaussian prior on W
+
+slides 3 - 42
+Softmax Classifier(Multinomial Logistic Regression)
+
+scores = unnormalized log probabilities of the classes
+P(Y=k|X=x_i) = e^s_k / sum:j[e^s_j] where s = f(x_i, W)
+
+L_i = -logP(Y=k|X=x_i) = -log(e^s_k / sum:j[e^s_j])
+
+ex cat)
+cat 3.2 / car 5.1 / frog -1.7
+=>(exp)=> 24.5 / 164.0 / 0.18
+=>(normalize)=> 0.13 / 0.87 / 0.00(probabilities)
+
+cat 0.13 =>L_cat = -log(0.13) = 0.89
+
+Q: What is the min/max possible loss L_i?
+min:0 max:infinite
+
+Q2 : Usually at initialization W is small so all s~0 What is loss?
+모든 e^s_y_i = 1이 되므로 모든 class의 loss 가 -log(1/class of Number)이 되므로
+log (class of Number)
+
+Q: Suppose I take a datapoint and I jiggle a bit (changing its score slightly). What happens to the loss in both cases?
+SVM은 다른 클래스의 값보다 크기만 하면 상관없었지만 softmax는 다르다
+softmax는 하나의 유일한 값의 크기가 지속적으로 높혀지기를 희망하기 때문이다.
+-infinite ~ infinite
+
+Recap 씌우다
+
+How do we find the best W? => Optimization
+
+slides 3 - 54
+walking around valley mountains
+
+Strategy 1 : A first bad idea solution : Random Search
+Strategy 2 : Follow the slope
+In multiple dimension, the gradient is the vector of (partial derivatives) along each dimension
+
+The slope in any direction is the dot product of the direction with the gradient
+The direction of steepest descent is the negative gradient
+
+slides 3 - 64
+
+Current W :	 [0.34, 	         -1.11, 0.78, 0.12, 0.55, 2.81, -3.1, -1.5, 0.33,…] // loss 1.25347
+W+h(first dim):	 [0.34 + 0.0001, -1.11, 0.78, 0.12, 0.55, 2.81, -3.1, -1.5, 0.33,…] // loss 1.25322
+gradient dW:	[-2.5(=(1.25322 - 1.25347)/0.0001), ?, ?, ?, ? ```]			
+
+Current W :	 [0.34, -1.11, 	     0.78, 0.12, 0.55, 2.81, -3.1, -1.5, 0.33,…] // loss 1.25347
+W+h(second dim):	 [0.34, -1.11 + 0.0001, 0.78, 0.12, 0.55, 2.81, -3.1, -1.5, 0.33,…] // loss 1.25353
+gradient dW:	[-2.5, 0.6(=(1.25353 - 1.25347)/0.0001) ?, ?, ?, ? ```]		
+
+Also Silly Method
+
+Use calculus to compute an analytic gradient by Newton and Leibniz 아이작 뉴턴, 라이프니츠, 데카르트
+
+slides 3 - 72
+
+In Summary
+- Numerical gradient: approximate, slow, easy to write
+- Analytic gradient : exact, fast, error-prone
+
+In pratice : Always use analytic gradient, but check implementation with numerical gradient. This is called a gradient check
+
+Gradient Descent
+
+whlie True:
+	weights_grad = evaluate_gradient(loss_fun, data, weights)
+	weights += -step_size * weights_grad #parameter update
+
+
+slides 3 - 76
+
+Stochastic Gradient Descent(SGD)
+Full sum expensive when N is large
+Approximate sum using a minibatch of examples 32/64/128 common
+
+while True:
+	data_batch = sample_training data(data, 256) # sample 256 examples
+	weights_grad = evaluate_gradient(loss_fun, data_batch, weights)
+	weights += -step_size * weights_grad #parameter update	
+
+http://vision.stanford.edu/teaching/cs231n-demos/linear-classify/
+
+slides 3 - 76
+Image Features:Motivation
+
+Cannot separate red and blue points with linear classifier
+=>f(x,y) = (r(x,y), theta(x,y))
+After applying feature transform, points can be seperated by linear classifier
+
+slides 3 - 82
+Color Histogram
+Histogram of Oriented Gradients(HoG)
+
+Divide image into 8x8 pixel regions Within each region quantize dege direction into 9 bins
+
+Example:320x240 image gets divided into 40x30 bins; in each bin there are 9 numbers so feature vector has 30*40*9 = 10,800 numbers
+
+slides 3 - 83
+Example:Bag of Words
+Step 1:Build codebook
+=>Extract random patches => Cluster patches to form "codebook" of "visual words"
+Step 2 : Encode images
+
+slides 3 - 84
+Image features vs ConvNets
+cat image => Feature Extraction 	=>	(f)=> 	10 numbers giving scores for classes
+			 	<= training<=
+
+cat	 => ConvNets => 10 numbers giving scores for classes
+	<= training <=

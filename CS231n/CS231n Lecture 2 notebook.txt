@@ -1,0 +1,205 @@
+﻿Assignment 1
+
+-K-Nearest Neighbors
+-Linear classifiers: SVM, Softmax
+-Two-Layer neural network
+-Image features
+
+Google Cloud Tutorial - virtual machine has GPUs
+
+slides 2 - 6
+Image Classification : A core task in Computer Vision
+
+discrete and variable labels => select cat label
+
+slides 2 - 7
+The Problem : Semantic Gap
+
+What we can see image is cat!
+but in computer A image is a big grid of number [0,255]
+
+slides 2 - 8
+Challenges:Viewpoint variation
+
+All pixels change when the camera moves
+
+slides 2 - 9
+Challenges: Illumination
+
+Cats exist in different intensity of light power
+
+slides 2 - 10
+Challenges: Deformation
+
+Cats exist in doing not look like cats shape of posture
+
+slides 2 - 11
+Challenges: Occlusion
+occlude : ~을 가리다
+
+definition of Occlusion in image : 
+https://stackoverflow.com/questions/2764238/image-processing-what-are-occlusions
+
+Semantic Gap between us and computers
+
+Cats exist in occlusion of sth in image
+
+slides 2 - 12
+Challenges: Background Clutter
+
+Clutter : 불필요한 반사파에 의한 반향(echo) 또는 반사 장애
+robust : 1. 원기 왕성한, 팔팔한, 2. (기구 등이) 튼튼한 3. 탄탄한
+
+similar to background with cat's fur
+
+slides 2 - 13
+Challenges:Intraclass variation
+
+Attempts have been made find edges -> find corners
+not well 
+
+slides 2 - 16
+Data-Driven Approach
+1.Collect a dataset of images and labels
+2.Use Machine Learning to train a classifier
+3. Evaluate the classifier on new images
+
+slides 2 - 17
+First classifier:Nearest Neighbors
+def train(images, labels):			=> Memorize all data and labels
+	return model
+
+def predict(model, test_images):		=>Predict the label of the most similar training image
+	return test_labels
+
+slides 2 - 18
+Example Dataset:CIFAR10
+10 classes, 50,000 training images(evenly distributed), 10,000 testing_images
+
+test images and nearest neighbors
+
+slides 2 - 20
+Distance Metric to compare images
+
+L1 distance = d_1(I_1, I_2) = sum_P_times(abs( I_1^P, I_2^P))
+
+deploy 배치하다, 효율적으로 사용하다
+
+Nearest Neighbors classifier
+Q: With N examples, how fast are training and prediction?
+A: Train O(1), Predict O(N)
+
+This is bad : we want classifier that are fast at prediction but slow
+
+slides 2 - 28
+K-Neighbors Neighbors
+Instead of copying label from nearest neighbor, take majority vote from K cloest points
+
+spurious 1.거짓된, 겉으로만, 그럴싸한 2.비논리적인
+
+slides 2 - 31
+L1(Manhattan) distance
+L1 distance = d_1(I_1, I_2) = sum_P_times(abs( I_1^P, I_2^P))
+
+마름모 coordinate frame이 중요
+
+L2(Euclidean) distance
+L2 distance = d_2(I_1, I_2) = (sum_P_times(( I_1^P, I_2^P)^2))^(1/2)
+root square of sumation of subtraction
+
+원
+
+slides 2 - 32
+K-Nearest Neighbors Demo
+http://vision.stanford.edu/teaching/cs231n-demos/knn/
+
+condition select
+Metric 			L1:L2
+Num Neighbors(K)		1:2:3:4:5:6:7
+Num classes 		2:3:4:5
+Num points 		20:30:40:50:60
+
+slides 2 - 35
+Hyperparameters
+
+What is the best value of k to use?
+What is the best distance to use?
+
+These are hyperparameters:choices about the algorithm that we set rather than learn
+
+Very problem dependent
+Must try them all out and see what works best
+
+slides 2 - 40
+Setting Hyperparameters
+
+Idea #1: Choose hyperparameters that work best on the data
+Bad : K=1 always works perfectly on training data
+
+Idea #2: Split data into train and test, choose hyperparameters that work best on test data
+Bad : No idea how algorithm will perform on new data
+
+Idea #3: Split data into train, val, and test; choose hyperparameters on val and evaluate on test
+Better!
+
+Idea #4: Cross-Validation: Split data into folds, try each fold as validation and average the results
+Useful for small datasets, but not used too frequently in deep learning
+
+slides 2 - 42
+Example of 5-fold cross-Example for the value of k.
+Each point: single outcome.
+The line goes through the mean, bars indicated standard deviation 
+(Seems that k ~= 7 works best for this data)
+
+k-Nearest Neighbors on images never used
+-Very slow at test time
+-Distance metrics on pixels are not informatiave
+-Curse of dimensionality
+=> Dimension 1, Points=4
+Dimension 2, Points=4^2
+Dimension 3, Points=4^3
+ex)
+1차원 => Need 4 Traning examples
+2차원 => Need 4^2 Traning examples
+
+slides 2 - 45
+K-Nearest Neighbors : Summary
+In Image classification we start with a training set of images and labels, and
+must predict labels on the test set
+The K-Nearest Neighbors classifier predicts labels based on nearest training
+examples
+Distance metric and K are hyperparameters
+Choose hyperparameters using the validation set; only run on the test set once at
+the very end!
+
+slides 2 - 47
+Linear Classification
+
+like stack lego blocks
+
+vest 조끼
+tint 엷은 색, 색조, 염색하다, 색깔을 넣다
+analogy 비유,유사점2.유추 
+
+CIFAR10
+each image is 32x32x3 in 50,000 training images
+10,000 test images
+
+Image(Array of 32x32x3 = 3072 numbers) -> f(x,W) (W: parameters or weights) -> 10 class scores
+
+f(x,W) = 10x1 = Wx +b = 10x3072 * 3072x1 + 10x1
+
+slides 2 - 59
+Hard cases for a linear classifier
+Case 1: number of pixels>0 odd & number of pixels>0 even
+Case 2: 1<=L2 norm <=2 & Everything else
+Case 2: Three modes & Everything else
+
+Coming up
+-Loss Function(quantifying what it means to have a good W)
+-Optimization(start with random W and find a W that minimizes the loss)
+-ConvNets (tweak the functional form of f)
+
+tweak 	1. 행동 행위 등을 do,have; 연극 운동경기 등을 play
+      	2. 만들다, 장만하다
+	3. 동작 표정 등을 
